@@ -124,7 +124,7 @@
 \begin{frame}{Terminologie}
   \begin{quote}
     Un \alert{système de type} est un système logique constitué d'un ensemble de règles qui assigne la propriété appelée un \textbf{type} à chaque "terme" (un mot, phrase, ou autre ensemble de symbole). Généralement les termes sont des constructions diverses d'un programme informatique, tels que les variables, expressions, fonctions, ou modules.
-    Un système de type dicte les \textbf{opérations} qui peuvent être réalisées sur un terme. Pour les variables, le système de type détermine les valeurs permissent de ce terme.
+    Un système de type dicte les \textbf{opérations} qui peuvent être réalisées sur un terme. Pour les variables, le système de type détermine les valeurs permises de ce terme.
     \cite{noauthor_type_2022}
     % Ref https://en.wikipedia.org/wiki/Type_system
   \end{quote}
@@ -158,7 +158,7 @@
     Les types disponibles sont :
     \begin{itemize}
         \item Types Primitifs
-        \item Types définit en espace Utilisateur
+        \item Types définis en espace Utilisateur
         \item Types Littéraux
         \item Type \texttt{\textbf{callable}}
         \item Types Composés
@@ -358,7 +358,7 @@ typedef struct {
 } zend_type;
             \end{minted}
             \texttt{\textbf{ptr}} est soit une classe sous forme de chaîne
-            soit une liste \\de type:
+            soit une liste \\de types:
             \begin{minted}[fontsize=\footnotesize,]{c}
 typedef struct {
   uint32_t num_types;
@@ -404,9 +404,9 @@ typedef struct {
     LSP est un principe à propos du remplacement d'un type par un autre tel que les interactions avant et après ne soient pas perturbées.
 
     \begin{description}
-        \item[Les pré-conditions] ne peuvent pas être renforcées dans une sous-type
+        \item[Les pré-conditions] ne peuvent pas être renforcées dans un sous-type
         \item[Les post-conditions] ne peuvent pas être affaiblies dans un sous-type
-        \item[Les invariants] doivent être conservé dans un sous-type
+        \item[Les invariants] doivent être conservés dans un sous-type
     \end{description}
 \end{frame}
 \begin{frame}{Principe de Substitution de Liskov: Simplifié}
@@ -616,7 +616,7 @@ foo($a); // TypeError: inout argument 1 passed to foo() must be of the type arra
 \appendix
 
 
-\begin{frame}[fragile]{Coercitions de types scalaire}
+\begin{frame}[fragile]{Coercitions de types scalaires}
     Par défaut PHP coerce les valeurs scalaires vers un type scalaire autorisé.
     S'il y a plusieurs types scalaires alors l'ordre est le suivant :
     \begin{enumerate}
@@ -640,8 +640,8 @@ foo($a); // TypeError: inout argument 1 passed to foo() must be of the type arra
     Plus de coercitions pour les types scalaires dans les cas suivant \alert{uniquement} :
     \begin{itemize}
         \item Appel de fonction dans le fichier qui définit \texttt{strict\_types}
-        \item Valeur de retour pour une fonction définit en espace utilisateur
-        \item Assignation de valeur à une propriété typé
+        \item Valeur de retour pour une fonction définie en espace utilisateur
+        \item Assignation de valeur à une propriété typée
     \end{itemize}
 \end{frame}
 \begin{frame}[fragile]{\texttt{strict\_types}}
@@ -667,7 +667,7 @@ var_dump(14 == "014"); // bool(true)
             \begin{minted}[fontsize=\scriptsize,breaklines]{php}
 <?php
 declare(strict_types=1);
-exit(true); // Écrira "1" et non pas un code de sortie 1 comme si exit(1) aurait été utilisé
+exit(true); // Écrira "1" et non pas un code de sortie 1 comme si exit(1) avait été utilisé
             \end{minted}
     \end{itemize}
 \end{frame}
@@ -675,7 +675,7 @@ exit(true); // Écrira "1" et non pas un code de sortie 1 comme si exit(1) aurai
     \texttt{strict\_types} ne change \alert{pas} le comportement :
 
     \begin{itemize}
-        \item De la coercitions des types scalaires pour les fonctions appelées par le moteur
+        \item De la coercition des types scalaires pour les fonctions appelées par le moteur
             \begin{minted}[fontsize=\scriptsize,breaklines]{php}
 <?php
 declare(strict_types=1);
