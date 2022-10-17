@@ -97,7 +97,7 @@
                 \item A étudié les maths pures
                 \item Core dev de PHP financé à temps partiel par \alert{The PHP Foundation}
                 \item Mainteneur principal de la documentation FR de PHP
-                \item Auteur des RFCs:
+                \item Auteur des RFCs~:
                     \begin{itemize}
                         \item Saner Numeric Strings \cite{banyard_saner_2020}
                         \item Pure Intersection Types \cite{banyard_pure_2021}
@@ -176,7 +176,7 @@
      \item[Type unitaire] \texttt{\textbf{null}} (PHP 8.0*)
      \item[Type vide]  \texttt{\textbf{never}} (PHP 8.1)
     \end{description}
-    Et un type de retour spécial:
+    Et un type de retour spécial~:
     \begin{description}[\descriptionsize]
      \item[] \texttt{\textbf{void}} (PHP 7.1)
     \end{description}
@@ -185,7 +185,7 @@
 %TODO Graph of type hierarchy ?
 
 \begin{frame}{Types définis en espace Utilisateur}
-    Aussi appelés \alert{class-types}, ce sont les:
+    Aussi appelés \alert{class-types}, ce sont les~:
     \begin{description}[\descriptionsize]
         \item [Interfaces]
         \item [Classes]
@@ -212,12 +212,12 @@
     \end{alertblock}
 \end{frame}
 \begin{frame}{Type \texttt{\textbf{callable}}}
-    Type qui représente une fonction:
+    Type qui représente une fonction~:
     \begin{itemize}
-        \item Une chaîne de caractères: \texttt{"strlen"}
-        \item Une paire objet/nom de méthode: \texttt{[\$instance, "method"]}
+        \item Une chaîne de caractères~: \texttt{"strlen"}
+        \item Une paire objet/nom de méthode~: \texttt{[\$instance, "method"]}
         \item Un objet qui implémente \texttt{\_\_invoke()}
-        \item Une Closure, récupérable avec la syntaxe: \texttt{strlen(...)} (PHP 8.1)
+        \item Une Closure, récupérable avec la syntaxe~: \texttt{strlen(...)} (PHP 8.1)
     \end{itemize}
 
     \begin{alertblock}{Attention}
@@ -254,7 +254,7 @@
 \end{frame}
 
 \subsection{Implémentation}
-\begin{frame}[fragile]{Implémentation: Vérification du type d'une valeur}
+\begin{frame}[fragile]{Implémentation~: Vérification du type d'une valeur}
     Chaque valeur en PHP est représentée par une \alert{Zval}.
       \begin{columns}[T,onlytextwidth]
         \column{0.5\textwidth}
@@ -290,7 +290,7 @@
       \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Implémentation: Vérification du type d'un objet}
+\begin{frame}[fragile]{Implémentation~: Vérification du type d'un objet}
       \begin{columns}[T,onlytextwidth]
         \column{0.4\textwidth}
         Structure de classe
@@ -358,7 +358,7 @@ typedef struct {
 } zend_type;
             \end{minted}
             \texttt{\textbf{ptr}} est soit une classe sous forme de chaîne
-            soit une liste \\de types:
+            soit une liste \\de types~:
             \begin{minted}[fontsize=\footnotesize,]{c}
 typedef struct {
   uint32_t num_types;
@@ -393,14 +393,14 @@ typedef struct {
 \begin{frame}{Principe de Substitution de Liskov}
     Le principe de substitution de Liskov (en anglais \emph{Liskov Substitution Principle} ou \alert{LSP}) est, en programmation orientée objet, une définition particulière de la notion de sous-type. Il a été formulé par Barbara Liskov et Jeannette Wing en 1993. \cite{liskov_behavioral_1994}
     
-    La formulation condensée est:
+    La formulation condensée est~:
     \begin{quote}
         Si $\mathbf{\phi(x)}$ est une propriété démontrable pour tout objet $\mathbf{x}$ de type $\mathbf{T}$, alors $\mathbf{\phi(y)}$ est vraie pour tout objet $\mathbf{y}$ de type $\mathbf{S}$ tel que $\mathbf{S}$ est un sous-type de $\mathbf{T}$
         
         %Cite https://dl.acm.org/doi/10.1145/197320.197383
     \end{quote}
 \end{frame}
-\begin{frame}{Principe de Substitution de Liskov: Simplifié}
+\begin{frame}{Principe de Substitution de Liskov~: Simplifié}
     LSP est un principe à propos du remplacement d'un type par un autre tel que les interactions avant et après ne soient pas perturbées.
 
     \begin{description}
@@ -409,7 +409,7 @@ typedef struct {
         \item[Les invariants] doivent être conservés dans un sous-type
     \end{description}
 \end{frame}
-\begin{frame}{Principe de Substitution de Liskov: Simplifié}
+\begin{frame}{Principe de Substitution de Liskov~: Simplifié}
     \begin{figure}
     \includegraphics{lsp-pipes.png}
     \caption{
@@ -431,7 +431,7 @@ typedef struct {
 
 \subsection{Implémentation}
 \begin{frame}[fragile]{Implémentation}
-    Pour la vérification de la compatibilité des types on a juste besoin de:
+    Pour la vérification de la compatibilité des types on a juste besoin de~:
 %\begingroup \fontsize{1pt}{1pt}\selectfont \endgroup
     \begin{minted}[fontsize=\footnotesize,breaklines]{c}
 static inheritance_status zend_perform_covariant_type_check(
@@ -443,7 +443,7 @@ static inheritance_status zend_perform_covariant_type_check(
     \end{minted}
     où \texttt{fe} représente le sous-type, et \texttt{proto} le super-type
 \end{frame}
-\begin{frame}[fragile]{Implémentation: covariance de types primitifs}
+\begin{frame}[fragile]{Implémentation~: covariance de types primitifs}
 %\begingroup \fontsize{1pt}{1pt}\selectfont \endgroup
     \begin{minted}[fontsize=\tiny,breaklines]{c}
 /* Apart from void, everything is trivially covariant to the mixed type.
@@ -483,7 +483,7 @@ if (added_types) {
     \end{align}
     On doit itérer sur l'ensemble de type $U$ d'abord, et juste vérifier si chaque $U_i$ est un sous-type de $V$. 
 \end{frame}
-\begin{frame}[fragile]{Implémentation: $U$ un type d'union, est-ce que $U \subtype V$ ?}
+\begin{frame}[fragile]{Implémentation~: $U$ un type d'union, est-ce que $U \subtype V$ ?}
 %\begingroup \fontsize{1pt}{1pt}\selectfont \endgroup
     \begin{minted}[fontsize=\tiny,breaklines]{c}
 early_exit_status = INHERITANCE_ERROR;
@@ -513,7 +513,7 @@ ZEND_TYPE_FOREACH(fe_type, single_type) {
 \begin{frame}{$U$ un type d'intersection, est-ce que $U \subtype V$ ?}
     Un type d'intersection en PHP est forcément un objet, donc si \texttt{object} $\in V$ alors $U \subtype V$.
 
-    Dans le cas général:
+    Dans le cas général~:
     $U_i \in U$, $V_j \in V$
     \begin{align}
         \mif\exists V_j, \exists U_i : U_i \subtype V_j & \implies U_1\inter\cdots\inter U_n \subtype V_1\union\cdots\union V_m \\
@@ -524,7 +524,7 @@ ZEND_TYPE_FOREACH(fe_type, single_type) {
     Si $V$ est un type d'union, il suffit d'une seule paire $(i;j)$ qui satisfait  $U_i \subtype V_j$ pour que $U \subtype V$.
     Dans le cas contraire il faut que chaque $V_j$ soit satisfait par au moins un $U_i$ pour que $U \subtype V$.
 \end{frame}
-\begin{frame}[fragile]{Implémentation: $U$ un type d'intersection, est ce que $U \subtype V$ ?}
+\begin{frame}[fragile]{Implémentation~: $U$ un type d'intersection, est ce que $U \subtype V$ ?}
 %\begingroup \fontsize{1pt}{1pt}\selectfont \endgroup
     \begin{minted}[fontsize=\tiny,breaklines]{c}
 static inheritance_status zend_is_intersection_subtype_of_type(
@@ -604,7 +604,7 @@ foo($a); // TypeError: inout argument 1 passed to foo() must be of the type arra
             \end{center}
         \column{0.5\textwidth}
             \begin{center}
-                Feedback:
+                Feedback~:
                 
                 \vspace{0.5cm}
                 \includegraphics[width=3cm]{images/Forum_PHP_2022_QRCode.png}
@@ -648,7 +648,7 @@ foo($a); // TypeError: inout argument 1 passed to foo() must be of the type arra
     \texttt{strict\_types} ne change \alert{pas} le comportement :
 
     \begin{itemize}
-        \item Des opérateurs binaires:
+        \item Des opérateurs binaires~:
             \begin{minted}[fontsize=\scriptsize,breaklines]{php}
 <?php
 declare(strict_types=1);
